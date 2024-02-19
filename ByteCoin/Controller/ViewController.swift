@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewController: UIViewController {
     
     let coinManager = CoinManager()
     
@@ -22,7 +22,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         currencyPicker.dataSource = self
         currencyPicker.delegate = self
     }
-    
+}
+
+// MARK - UIPickerViewDataSource, UIPickerViewDelegate
+
+extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate  {
+ 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
