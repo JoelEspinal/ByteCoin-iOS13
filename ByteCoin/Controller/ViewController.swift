@@ -21,7 +21,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         // Do any additional setup after loading the view.
         currencyPicker.dataSource = self
         currencyPicker.delegate = self
-        
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -37,8 +36,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        DispatchQueue.main.async {
-            print(self.coinManager.currencyArray[row])
-        }
+        let selectedCurrency = self.coinManager.currencyArray[row]
+        coinManager.getCoinPrice(for: selectedCurrency)
     }
 }
