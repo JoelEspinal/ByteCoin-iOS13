@@ -8,8 +8,12 @@
 
 import Foundation
 
-struct CoinData: Codable {
-    
-    var asset_id_base: Double
-    
+
+struct result: Codable {
+    let rates: [CoinData]
 }
+
+struct CoinData: Codable {
+    var rate: Double
+}
+

@@ -26,11 +26,10 @@ struct CoinManager {
        var queryItems = [ URLQueryItem(name: "ApiKey", value: apiKey) ]
         var components = URLComponents(string: urlString)!
         components.queryItems = queryItems
+        
         if let url = components.url {
-            
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { (data, response, error) in
-                print(response)
                 if error != nil {
                     print(error!)
                     return
@@ -38,7 +37,6 @@ struct CoinManager {
                 
                 if let safeData = data {
                     if let coinModel = parseJSON(safeData){
-                        print(safeData)
                         print(coinModel)
                     }
                 }
@@ -50,13 +48,13 @@ struct CoinManager {
     func parseJSON(_ coinData: Data) -> CoinModel? {
         let decoder = JSONDecoder()
         
-        do{
+        do {
             let decodedData = try decoder.decode(CoinData.self, from: coinData)
-            let currencyRate = decodedData.asset_id_base
+            let currencyRate = decodedData.rate
             let coinModel = CoinModel(rate: currencyRate)
-            print(coinModel)
             
-            return coinModel
+            print(coinModel)
+            return nil
         } catch {
             return nil
         }
