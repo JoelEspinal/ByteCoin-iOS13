@@ -15,5 +15,6 @@ struct result: Codable {
 
 struct CoinData: Codable {
     var rate: Double
+    
 }
 

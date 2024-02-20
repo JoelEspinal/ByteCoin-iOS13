@@ -8,10 +8,16 @@
 
 import Foundation
 
+protocol CoinManagerDelegate {
+    func didUpdateCoin(_ coinManager: CoinManager, coins: [CoinModel])
+}
+
 struct CoinManager {
     
     let baseURL = "https://rest.coinapi.io/v1/exchangerate/BTC"
     let apiKey =  "YOUR_API_KEY_HERE"
+    
+    var delegate: CoinManagerDelegate?
     
     // GET https://rest.coinapi.io/v1/exchangerate/:asset_id_base/:asset_id_quote
     
@@ -37,7 +43,7 @@ struct CoinManager {
                 
                 if let safeData = data {
                     if let coinModel = parseJSON(safeData){
-                        print(coinModel)
+                        self.delegate?.didUpdateCoin(self, coins: [coinModel])
                     }
                 }
             }
@@ -52,6 +58,8 @@ struct CoinManager {
             let decodedData = try decoder.decode(CoinData.self, from: coinData)
             let currencyRate = decodedData.rate
             let coinModel = CoinModel(rate: currencyRate)
+            
+            self.delegate?.didUpdateCoin(self, coins: [coinModel])
             
             print(coinModel)
             return nil
